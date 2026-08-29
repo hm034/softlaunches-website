@@ -23,7 +23,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
             className={`${anton.variable} ${workSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+           <body className="min-h-full flex flex-col relative">
+        <div className="fixed inset-0 -z-10 bg-photo opacity-10 pointer-events-none" />
+        {children}
+      </body>
     </html>
   );
 }
