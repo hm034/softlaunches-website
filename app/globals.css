@@ -22,9 +22,3 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body), sans-serif;
 }
-
-.bg-photo {
-  background-image: url("/tupac.jpeg");
-  background-size: cover;
-  background-position: center;
-}
