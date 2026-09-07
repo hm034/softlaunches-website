@@ -17,12 +17,14 @@ export const metadata: Metadata = {
   title: "soft.launches — Thrift Store",
   description: "Bold vintage thrifted fashion.",
 };
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-            className={`${anton.variable} ${workSans.variable} h-full antialiased`}
+      className={`${anton.variable} ${workSans.variable} h-full antialiased`}
     >
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
