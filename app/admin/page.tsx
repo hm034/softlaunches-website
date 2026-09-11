@@ -53,6 +53,28 @@ export default function AdminPage() {
     })();
   }, [router, loadProducts]);
 
+    async function handleFile(file: File) {
+    const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+    const path = `${Date.now()}-${safeName}`;
+
+    const { error } = await supabase.storage
+      .from("product-images")
+      .upload(path, file);
+
+        if (error) {
+      setMessage(error.message);
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from("product-images")
+      .getPublicUrl(path);
+
+    setImageUrl(data.publicUrl);
+  }
+
+  
+
   async function addProduct(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
@@ -159,12 +181,29 @@ export default function AdminPage() {
           onChange={(e) => setSize(e.target.value)}
           className="border-2 border-ink bg-cream px-3 py-2 font-body text-ink"
         />
+        {imageUrl && ( 
+          <img
+            src={imageUrl}
+            alt=""
+            className="w-32 h-32 object-cover border-2 border-ink sm:col-span-2"
+          />
+        )}
+
         <input
           placeholder="Condition"
           value={condition}
           onChange={(e) => setCondition(e.target.value)}
           className="border-2 border-ink bg-cream px-3 py-2 font-body text-ink"
         />
+       <input
+          type="file"
+          accept="image/*"
+          className="sm:col-span-2 font-body text-sm"
+          onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) handleFile(file);
+        }} 
+        />  
         <input
           placeholder="Image URL (optional)"
           value={imageUrl}
